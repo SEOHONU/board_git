@@ -12,7 +12,7 @@
 		<tr>
 			<th colspan=2>Index</th>
 		</tr>
-		<tr><td><a href="/message/inputForm.jsp">insert</a></td><td><a href="/select.message">select</a></td></tr>
+		<tr><td><a href="/messages/inputForm.jsp">insert</a></td><td><a href="/select.messages">select</a></td></tr>
 	</table>
 </body>
 </html>
