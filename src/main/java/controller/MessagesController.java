@@ -20,13 +20,13 @@ public class MessagesController extends HttpServlet {
 	      response.setContentType("text/html; charset=utf8");
 	      String cmd = request.getRequestURI();
 	      try {
-	    	  if(cmd.equals("/select.message")) {
+	    	  if(cmd.equals("/select.messages")) {
 	    	  MessagesDAO dao = MessagesDAO.getInstance();
 	    	  System.out.println("select서블릿 MessageDAO 인스턴스 실행");
 	    	  List<MessagesDTO> result = dao.select();
-	    	  request.setAttribute("select", result);
-	    	request.getRequestDispatcher("/");
-	    			  }
+	    	  request.setAttribute("list", result);
+	    	  request.getRequestDispatcher("").forward(request, response);
+	    	  }
 	      }catch (Exception e) {
 	    	  
 	      }
