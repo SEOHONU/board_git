@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.MessageDAO;
+import dao.MessagesDAO;
 
 @WebServlet("*.message")
-public class MessageController extends HttpServlet {
+public class MessagesController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf8");
@@ -18,16 +18,17 @@ public class MessageController extends HttpServlet {
 		String cmd = request.getRequestURI();
 	
 		try {
-			if(cmd.equals("insert.message")){
-			String id = request.getParameter("id");
+			if(cmd.equals("insert.messages")){
+			int id = Integer.parseInt(request.getParameter("id"));
 			String writer = request.getParameter("writer");
 			String message = request.getParameter("message");
 			
-			int result = MessageDAO.getInstance().insert(writer, message);
+			int result = MessagesDAO.getInstance().insert(writer, message);
 			
-			request.getRequestDispatcher(/select.message).forward(request, response);
+			request.getRequestDispatcher("/select.messages.jsp").forward(request, response);
 			
 			}
+			
 			
 		}catch (Exception e) {
 			e.printStackTrace();
