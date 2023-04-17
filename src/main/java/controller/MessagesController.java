@@ -24,7 +24,6 @@ public class MessagesController extends HttpServlet {
 		MessagesDAO dao = MessagesDAO.getInstance();
 		try {
 			if (cmd.equals("/select.messages")) {
-				System.out.println("select서블릿 MessageDAO 인스턴스 실행");
 				List<MessagesDTO> result = dao.select();
 				request.setAttribute("list", result);
 				request.getRequestDispatcher("/inputForm.jsp").forward(request, response);
@@ -35,11 +34,12 @@ public class MessagesController extends HttpServlet {
 				int result = MessagesDAO.getInstance().insert(writer, message);
 				request.getRequestDispatcher("/select.messages?id="+id).forward(request,response);
 			}else if(cmd.equals("insert.messages")){
-				int id = Integer.parseInt(request.getParameter("id"));
-				String writer = request.getParameter("writer");
-				String message = request.getParameter("message");
-				int result = MessagesDAO.getInstance().insert(writer, message);
-				request.getRequestDispatcher("/select.messages").forward(request, response);
+			int id = Integer.parseInt(request.getParameter("id"));
+			String writer = request.getParameter("writer");
+			String message = request.getParameter("message");
+			
+			int result = MessagesDAO.getInstance().insert(writer, message);
+			response.sendRedirect("/select.messages");
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
