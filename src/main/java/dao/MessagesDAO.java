@@ -12,12 +12,12 @@ import javax.sql.DataSource;
 
 import dto.MessagesDTO;
 
-public class MessageDAO {
-	private static MessageDAO instance = null;
+public class MessagesDAO {
+	private static MessagesDAO instance = null;
 
-	public synchronized static MessageDAO getInstance() {
+	public synchronized static MessagesDAO getInstance() {
 		if (instance == null) {
-			instance = new MessageDAO();
+			instance = new MessagesDAO();
 		}
 
 		return instance;
