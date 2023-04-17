@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>index</title>
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 </head>
 <body>
@@ -12,7 +12,7 @@
 		<tr>
 			<th colspan=2>Index</th>
 		</tr>
-		<tr><td><a href="/insert.message">insert</a></td><td><a href="/select.message">select</a></td></tr>
+		<tr><td><a href="/message/inputForm.jsp">insert</a></td><td><a href="/select.message">select</a></td></tr>
 	</table>
 </body>
 </html>
