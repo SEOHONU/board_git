@@ -24,9 +24,7 @@ public class MessagesController extends HttpServlet {
 			String message = request.getParameter("message");
 			
 			int result = MessagesDAO.getInstance().insert(writer, message);
-			request.setAttribute("result", result);
-			request.getRequestDispatcher("/select.messages.jsp").forward(request, response);
-			
+			response.sendRedirect("/select.messages");
 			}
 			
 			
