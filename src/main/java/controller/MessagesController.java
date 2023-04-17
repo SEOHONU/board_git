@@ -33,13 +33,18 @@ public class MessagesController extends HttpServlet {
 				String writer = request.getParameter("writer");
 				String message = request.getParameter("message");
 				int result = MessagesDAO.getInstance().insert(writer, message);
-				request.getRequestDispatcher("/select.messages?id="+id).forward(request,response);
+				response.sendRedirect("/select.messages");
 			}
 			else if(cmd.equals("/insert.messages")){
 				String writer = request.getParameter("writer");
 				String message = request.getParameter("message");
 				int result = MessagesDAO.getInstance().insert(writer, message);
 				response.sendRedirect("/select.messages");
+			}
+			else if(cmd.equals("/delete.messages")) {
+				int id = Integer.parseInt(request.getParameter("id"));
+				int result = dao.delete(id);
+				response.sendRedirect("/index.jsp"); 
 			}
 		}catch (Exception e) {
 			e.printStackTrace();

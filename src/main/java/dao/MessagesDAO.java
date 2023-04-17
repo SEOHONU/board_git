@@ -76,4 +76,14 @@ public class MessagesDAO {
 		}
 	}
 
+	public int delete(int id) throws Exception {
+		String sql = "delete from messages where id =?"; 
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql); ) {
+			pstat.setInt(1, id);
+			int result = pstat.executeUpdate(); 
+			con.commit();
+			return result; 
+		}
+	}
 }
