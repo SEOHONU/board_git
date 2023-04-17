@@ -69,8 +69,8 @@ public class MessagesDAO {
 		DataSource ds = (DataSource)iCxt.lookup("java:/comp/env/jdbc/ora");
 		return ds.getConnection();
 	}
-	
-	public int updateMessage(int id,String writer, String message) throws Exception{
+
+	public int updateMessages(int id,String writer, String message) throws Exception{
 		String sql = "update messages set writer=?, message=? where id=?";
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);){
@@ -81,7 +81,7 @@ public class MessagesDAO {
 			con.commit();
 			return result;
 		}
-		
+
 	}
 
 	public int insert(String writer, String message) throws Exception{
@@ -90,10 +90,10 @@ public class MessagesDAO {
 				PreparedStatement pstat = con.prepareStatement(sql);){
 			pstat.setString(1,writer);
 			pstat.setString (2,message);
-			
-		int result = pstat.executeUpdate();
-		con.commit();
-		return result;
+
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
 		}
 	}
 
