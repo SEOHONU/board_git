@@ -13,6 +13,8 @@ import javax.sql.DataSource;
 import dto.MessagesDTO;
 
 public class MessagesDAO {
+
+
 	private static MessagesDAO instance = null;
 
 	public synchronized static MessagesDAO getInstance() {
@@ -29,30 +31,41 @@ public class MessagesDAO {
 
 		return ds.getConnection();
 	}
-	
-public List<MessagesDTO> select() throws Exception{
-	String sql = "select * from messages";
-	try(Connection con = this.getConnection();
-			PreparedStatement stat = con.prepareStatement(sql);
-			ResultSet rs = stat.executeQuery();
-			){
-	List<MessagesDTO> result = new ArrayList<>();
-	while(rs.next()) {
-		int id=rs.getInt("id");
-		String writer = rs.getString("writer");
-		String message = rs.getString("message");
-		MessagesDTO dto =new MessagesDTO(id,writer,message);
-	 result.add(dto);
-		
+
+	public List<MessagesDTO> select() throws Exception{
+		String sql = "select * from messages";
+		try(Connection con = this.getConnection();
+				PreparedStatement stat = con.prepareStatement(sql);
+				ResultSet rs = stat.executeQuery();
+				){
+			List<MessagesDTO> result = new ArrayList<>();
+			while(rs.next()) {
+				int id=rs.getInt("id");
+				String writer = rs.getString("writer");
+				String message = rs.getString("message");
+				MessagesDTO dto =new MessagesDTO(id,writer,message);
+				result.add(dto);
+				con.commit();
+
+			}
+			return result;
+
+
+		}
 	}
-	return result;
-	
-		
+
+	public int insert(String writer, String message) throws Exception{
+		String sql = " insert into messages values(messages_seq.nextval,?,?)";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setString(1,writer);
+			pstat.setString (2,message);
+
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
 	}
-	
-	
-}
-	
-	
-	
+
+
 }
