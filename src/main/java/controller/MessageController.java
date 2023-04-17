@@ -30,7 +30,7 @@ public class MessageController extends HttpServlet {
 
 				MessagesDAO dao = MessagesDAO.getInstance();
 				int result = dao.updateMessage(id, writer, message);
-				request.getRequestDispatcher("/update.message?id="+id).forward(request,response);
+				request.getRequestDispatcher("/select.message?id="+id).forward(request,response);
 			}catch (Exception e ) {
 				e.printStackTrace();
 				response.sendRedirect("error.html");
