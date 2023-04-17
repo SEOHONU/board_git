@@ -26,20 +26,21 @@ public class MessagesController extends HttpServlet {
 			if (cmd.equals("/select.messages")) {
 				List<MessagesDTO> result = dao.select();
 				request.setAttribute("list", result);
-				request.getRequestDispatcher("/inputForm.jsp").forward(request, response);
-			}else if(cmd.equals("/update.messages")) {
+				request.getRequestDispatcher("/messages/select.jsp").forward(request, response);
+			}
+			else if(cmd.equals("/update.messages")) {
 				int id = Integer.parseInt(request.getParameter("id"));
 				String writer = request.getParameter("writer");
 				String message = request.getParameter("message");
 				int result = MessagesDAO.getInstance().insert(writer, message);
 				request.getRequestDispatcher("/select.messages?id="+id).forward(request,response);
-			}else if(cmd.equals("insert.messages")){
-			int id = Integer.parseInt(request.getParameter("id"));
-			String writer = request.getParameter("writer");
-			String message = request.getParameter("message");
-			
-			int result = MessagesDAO.getInstance().insert(writer, message);
-			response.sendRedirect("/select.messages");
+			}
+			else if(cmd.equals("/insert.messages")){
+				int id = Integer.parseInt(request.getParameter("id"));
+				String writer = request.getParameter("writer");
+				String message = request.getParameter("message");
+				int result = MessagesDAO.getInstance().insert(writer, message);
+				response.sendRedirect("/select.messages");
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
