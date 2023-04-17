@@ -10,7 +10,7 @@
         </head>
 
         <body>
-        <form action="index.jsp">
+        <form action="/index.jsp">
             <table border="1" style="margin: auto;">
                 <tr>
                     <th>아이디</th>
