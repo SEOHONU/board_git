@@ -8,7 +8,7 @@
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 </head>
 <body>
-	<form action="/insert.message" method="get">
+	<form action="/insert.messages" method="get">
 		<input type="text" name="writer"><br>
 		<input type="text" name="message"><br>
 		<input type="submit">
