@@ -20,18 +20,18 @@ public class MessagesController extends HttpServlet {
 		String cmd=request.getRequestURI();
 		request.setCharacterEncoding("utf8");
 		response.setContentType("text/html; charset=utf8");
-	try {
+		try {
 
-		if(cmd.equals("/update.messages")) {
+			if(cmd.equals("/update.messages")) {
 				int id = Integer.parseInt(request.getParameter("id"));
 				String writer = request.getParameter("writer");
 				String message = request.getParameter("message");
 
 				MessagesDAO dao = MessagesDAO.getInstance();
-				int result = dao.updateMessage(id, writer, message);
+				int result = dao.updateMessages(id, writer, message);
 				request.getRequestDispatcher("/select.messages?id="+id).forward(request,response);
 			}
-	
+
 			if(cmd.equals("insert.messages")){
 				int id = Integer.parseInt(request.getParameter("id"));
 				String writer = request.getParameter("writer");
