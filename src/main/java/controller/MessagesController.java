@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.MessagesDAO;
 
-@WebServlet("*.message")
+@WebServlet("*.messages")
 public class MessagesController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
