@@ -36,7 +36,6 @@ public class MessagesController extends HttpServlet {
 				request.getRequestDispatcher("/select.messages?id="+id).forward(request,response);
 			}
 			else if(cmd.equals("/insert.messages")){
-				int id = Integer.parseInt(request.getParameter("id"));
 				String writer = request.getParameter("writer");
 				String message = request.getParameter("message");
 				int result = MessagesDAO.getInstance().insert(writer, message);

@@ -19,6 +19,7 @@ public class MessagesDAO {
 		}
 		return instance;
 	}
+
 	private Connection getConnection() throws Exception {
 		Context iCtx = new InitialContext();
 		DataSource ds = (DataSource) iCtx.lookup("java:/comp/env/jdbc/ora");
@@ -27,7 +28,8 @@ public class MessagesDAO {
 
 	public List<MessagesDTO> select() throws Exception{
 		String sql = "select * from messages";
-		try(Connection con = this.getConnection();
+		try(
+				Connection con = this.getConnection();
 				PreparedStatement stat = con.prepareStatement(sql);
 				ResultSet rs = stat.executeQuery();
 				){
@@ -38,6 +40,7 @@ public class MessagesDAO {
 				String message = rs.getString("message");
 				MessagesDTO dto =new MessagesDTO(id,writer,message);
 				result.add(dto);
+				con.commit();
 			}
 			return result;
 		}
@@ -45,8 +48,10 @@ public class MessagesDAO {
 
 	public int updateMessages(int id,String writer, String message) throws Exception{
 		String sql = "update messages set writer=?, message=? where id=?";
-		try(Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);){
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
 			pstat.setInt(3, id);
 			pstat.setString(1, writer);
 			pstat.setString(2, message);
@@ -54,12 +59,15 @@ public class MessagesDAO {
 			con.commit();
 			return result;
 		}
+
 	}
 
 	public int insert(String writer, String message) throws Exception{
 		String sql = " insert into messages values(messages_seq.nextval,?,?)";
-		try(Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);){
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
 			pstat.setString(1,writer);
 			pstat.setString (2,message);
 			int result = pstat.executeUpdate();
@@ -67,6 +75,5 @@ public class MessagesDAO {
 			return result;
 		}
 	}
-
 
 }
