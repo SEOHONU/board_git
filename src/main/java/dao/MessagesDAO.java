@@ -15,11 +15,12 @@ import dto.MessagesDTO;
 public class MessagesDAO {
 
 
-	private static MessagesDAO instance = null;
 
+	private MessagesDAO() {};
+	private static MessagesDAO instance=null;
 	public synchronized static MessagesDAO getInstance() {
-		if (instance == null) {
-			instance = new MessagesDAO();
+		if(instance==null) {
+			instance= new MessagesDAO();
 		}
 
 		return instance;
@@ -50,8 +51,21 @@ public class MessagesDAO {
 			}
 			return result;
 
-
 		}
+		}
+
+	public int updateMessages(int id,String writer, String message) throws Exception{
+		String sql = "update messages set writer=?, message=? where id=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setInt(3, id);
+			pstat.setString(1, writer);
+			pstat.setString(2, message);
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+
 	}
 
 	public int insert(String writer, String message) throws Exception{

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import dao.MessagesDAO;
 import dto.MessagesDTO;
 
+
 @WebServlet("*.messages")
 public class MessagesController extends HttpServlet {
 
@@ -20,27 +21,28 @@ public class MessagesController extends HttpServlet {
 		request.setCharacterEncoding("utf8");
 		response.setContentType("text/html; charset=utf8");
 		String cmd = request.getRequestURI();
+		MessagesDAO dao = MessagesDAO.getInstance();
 		try {
 			if (cmd.equals("/select.messages")) {
-				MessagesDAO dao = MessagesDAO.getInstance();
 				System.out.println("select서블릿 MessageDAO 인스턴스 실행");
 				List<MessagesDTO> result = dao.select();
 				request.setAttribute("list", result);
 				request.getRequestDispatcher("/inputForm.jsp").forward(request, response);
-			} else if (cmd.equals("insert.messages")) {
+			}else if(cmd.equals("/update.messages")) {
 				int id = Integer.parseInt(request.getParameter("id"));
 				String writer = request.getParameter("writer");
 				String message = request.getParameter("message");
-
 				int result = MessagesDAO.getInstance().insert(writer, message);
-
-				request.getRequestDispatcher("/select.messages.jsp").forward(request, response);
-
+				request.getRequestDispatcher("/select.messages?id="+id).forward(request,response);
+			}else if(cmd.equals("insert.messages")){
+				int id = Integer.parseInt(request.getParameter("id"));
+				String writer = request.getParameter("writer");
+				String message = request.getParameter("message");
+				int result = MessagesDAO.getInstance().insert(writer, message);
+				request.getRequestDispatcher("/select.messages").forward(request, response);
 			}
-
-		} catch (Exception e) {
+		}catch (Exception e) {
 			e.printStackTrace();
-
 		}
 	}
 
