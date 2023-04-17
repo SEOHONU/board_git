@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,13 +10,28 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.MessagesDAO;
 
+
 @WebServlet("*.messages")
 public class MessagesController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		String cmd=request.getRequestURI();
 		request.setCharacterEncoding("utf8");
-		String cmd = request.getRequestURI();
-		try {
+		response.setContentType("text/html; charset=utf8");
+	try {
+
+		if(cmd.equals("/update.messages")) {
+				int id = Integer.parseInt(request.getParameter("id"));
+				String writer = request.getParameter("writer");
+				String message = request.getParameter("message");
+
+				MessagesDAO dao = MessagesDAO.getInstance();
+				int result = dao.updateMessage(id, writer, message);
+				request.getRequestDispatcher("/select.messages?id="+id).forward(request,response);
+			}
+	
 			if(cmd.equals("insert.messages")){
 				int id = Integer.parseInt(request.getParameter("id"));
 				String writer = request.getParameter("writer");
@@ -27,6 +43,7 @@ public class MessagesController extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
